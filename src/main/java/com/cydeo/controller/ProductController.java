@@ -33,7 +33,7 @@ public class ProductController {
     1610111c-771b-4c71-b2da-2295769603d0	milkshake	22	 24
      */
 
-    // I am here 2 requirements left
+    // I am here 2 requirements left 4 are done
         @RequestMapping("/cart-list")
     public String productSearchIDInfo(Model model){
 
