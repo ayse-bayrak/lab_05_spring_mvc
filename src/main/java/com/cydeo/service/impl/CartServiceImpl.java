@@ -4,11 +4,13 @@ import com.cydeo.model.Cart;
 import com.cydeo.model.CartItem;
 import com.cydeo.service.CartService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.resource.CachingResourceTransformer;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.cydeo.service.impl.ProductServiceImpl.PRODUCT_LIST;
 
@@ -24,8 +26,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> retrieveCartDetail(UUID cartId) {
-        // todo implement method using stream
-        return new ArrayList<>();
+        initialiseCartList();//CART_LIST {cart1, cart2}
+        List<Cart> cartList = retrieveCartList();
+        List<CartItem> cartItemList = cartList.get(0).getCartItemList();
+
+        return cartItemList.stream().filter(s->s.getProduct().getId().equals(cartId)).toList();
+
     }
 
     @Override
@@ -63,9 +69,11 @@ public class CartServiceImpl implements CartService {
         BigDecimal cart1TotalAmount = BigDecimal.ZERO;
 
         // todo change to stream
-        for (CartItem cartItem : cartItemList1) {
-            cart1TotalAmount = cart1TotalAmount.add(cartItem.getTotalAmount());
-        }
+        cart1TotalAmount = cartItemList1.stream().map(CartItem::getTotalAmount).map(BigDecimal::plus).findFirst().orElseThrow();
+
+//        for (CartItem cartItem : cartItemList1) {
+//            cart1TotalAmount = cart1TotalAmount.add(cartItem.getTotalAmount());
+//        }
 
         cart1.setCartTotalAmount(cart1TotalAmount);
 
@@ -77,9 +85,10 @@ public class CartServiceImpl implements CartService {
         BigDecimal cart2TotalAmount = BigDecimal.ZERO;
 
         // todo change to stream
-        for (CartItem cartItem : cartItemList2) {
-            cart2TotalAmount = cart2TotalAmount.add(cartItem.getTotalAmount());
-        }
+        cart2TotalAmount = cartItemList2.stream().map(CartItem::getTotalAmount).map(BigDecimal::plus).findFirst().orElseThrow();
+//        for (CartItem cartItem : cartItemList2) {
+//            cart2TotalAmount = cart2TotalAmount.add(cartItem.getTotalAmount());
+//        }
 
         cart2.setCartTotalAmount(cart2TotalAmount);
 

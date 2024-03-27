@@ -2,14 +2,19 @@ package com.cydeo.service.impl;
 
 import com.cydeo.model.Product;
 import com.cydeo.service.ProductService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
+@Getter
+@Setter
 public class ProductServiceImpl implements ProductService {
 
     public static List<Product> PRODUCT_LIST = new ArrayList<>();
@@ -17,7 +22,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> searchProduct(String name) {
         // todo implement search structure using string startsWith function
-        return new ArrayList<>();
+        // done
+        return PRODUCT_LIST.stream().filter(s->s.getName().contains(name))
+                .collect(Collectors.toList());
+
     }
 
     @Override
