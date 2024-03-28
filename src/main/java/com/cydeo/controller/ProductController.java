@@ -47,22 +47,22 @@ ID	TotalPrice
 c65ffda2-ee28-4758-a348-26815dc997c4	110
  */
 
+
+
     @RequestMapping("/cart-list/{id}")
     public String productSearchIDInfo(@PathVariable UUID id, Model model){
-//        List<Product> PRODUCT_LIST = ProductServiceImpl.PRODUCT_LIST;
-//        List<Cart> CART_LIST= CartServiceImpl.CART_LIST;
         CartServiceImpl cartService = new CartServiceImpl();
-        //cartService.initialiseCartList();
+        List<Cart> cart = cartService.retrieveCartList();
+        cart.get(0).setId(id);
         List<CartItem> cartItems = cartService.retrieveCartDetail(id);
        // cartList = cartList.stream().filter(s->s.getCartItemList().equals(cartItems)).toList();
         model.addAttribute("cartItemList", cartItems);
         return "cart/cart-detail";
     }
-
-        /*
+    /*
     Products
 Product Name	Product ID	Product Price	Quantity
-milk	72a668fb-10b7-454b-bb8f-ba5304f4b354	7	3
-xbox	179ae235-5234-49d1-9e97-e7c51557ae11	4500	4
+milk	184a60ba-8d59-4aa0-b976-5031ed7d7cc9	7	3
+xbox	2ac10e09-aecf-4fa8-9899-02da63b93694	4500	4
      */
 }
