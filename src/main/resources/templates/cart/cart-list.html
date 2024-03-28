@@ -16,8 +16,8 @@
         </thead>
         <tbody>
         <tr th:each="cart: ${cartList}">
-            <td th:text="${cart.getId()}"></td>
-            <td th:text="${cart.getCartTotalAmount()}"></td>
+            <td th:text="${cart.id}"></td>
+            <td th:text="${cart.cartTotalAmount}"></td>
         </tr>
         </tbody>
     </table>

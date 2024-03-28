@@ -4,13 +4,11 @@ import com.cydeo.model.Cart;
 import com.cydeo.model.CartItem;
 import com.cydeo.service.CartService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.resource.CachingResourceTransformer;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.cydeo.service.impl.ProductServiceImpl.PRODUCT_LIST;
 
@@ -28,10 +26,10 @@ public class CartServiceImpl implements CartService {
     public List<CartItem> retrieveCartDetail(UUID cartId) {
         initialiseCartList();//CART_LIST {cart1, cart2}
         List<Cart> cartList = retrieveCartList();
-        List<CartItem> cartItemList = cartList.get(0).getCartItemList();
+        //List<CartItem> cartItemList = new ArrayList<>();
+     cartList = cartList.stream().filter(s->s.getId().equals(cartId)).toList();
 
-        return cartItemList.stream().filter(s->s.getProduct().getId().equals(cartId)).toList();
-
+     return cartList.get(0).getCartItemList();
     }
 
     @Override
