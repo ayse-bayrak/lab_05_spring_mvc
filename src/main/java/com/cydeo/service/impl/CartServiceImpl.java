@@ -24,9 +24,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> retrieveCartDetail(UUID cartId) {
-        initialiseCartList();//CART_LIST {cart1, cart2}
+       // initialiseCartList();
         List<Cart> cartList = retrieveCartList();
-        //List<CartItem> cartItemList = new ArrayList<>();
      cartList = cartList.stream().filter(s->s.getId().equals(cartId)).toList();
 
      return cartList.get(0).getCartItemList();
@@ -64,7 +63,7 @@ public class CartServiceImpl implements CartService {
         cart1.setId(UUID.randomUUID());
         cart1.setCartItemList(cartItemList1);
 
-        BigDecimal cart1TotalAmount = BigDecimal.ZERO;
+        BigDecimal cart1TotalAmount;
 
         // todo change to stream
         cart1TotalAmount = cartItemList1.stream().map(CartItem::getTotalAmount).map(BigDecimal::plus).findFirst().orElseThrow();
@@ -80,7 +79,7 @@ public class CartServiceImpl implements CartService {
         cart2.setId(UUID.randomUUID());
         cart2.setCartItemList(cartItemList2);
 
-        BigDecimal cart2TotalAmount = BigDecimal.ZERO;
+        BigDecimal cart2TotalAmount;
 
         // todo change to stream
         cart2TotalAmount = cartItemList2.stream().map(CartItem::getTotalAmount).map(BigDecimal::plus).findFirst().orElseThrow();
